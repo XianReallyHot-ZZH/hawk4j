@@ -11,7 +11,7 @@
 	<modules>
 <!--		<module>hawk4j-spring-boot</module>-->
 		<module>hawk4j-core</module>
-<!--		<module>hawk4j-common</module>-->
+		<module>hawk4j-common</module>
 <!--		<module>hawk4j-server</module>-->
 		<module>hawk4j-example</module>
 	</modules>
