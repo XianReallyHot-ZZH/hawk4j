@@ -425,6 +425,7 @@ public class ResizableCapacityLinkedBlockingQueue<E> extends AbstractQueue<E>
 
     /**
      * 数据入队的方法
+     * 往线程池提交任务的时候，线程池内部将任务提交到队列中时用的就是这个方法
      *
      * Inserts the specified element at the tail of this queue if possible,
      * returning immediately if this queue is full.
@@ -475,6 +476,7 @@ public class ResizableCapacityLinkedBlockingQueue<E> extends AbstractQueue<E>
         return c >= 0;
     }
 
+    // 线程池里面对任务进行调度的时候，会有可能调用该方法获取队列中的任务
     @Override
     public E take() throws InterruptedException {
         E x;
@@ -506,6 +508,7 @@ public class ResizableCapacityLinkedBlockingQueue<E> extends AbstractQueue<E>
         return x;
     }
 
+    // 线程池里面对任务进行调度的时候，会有可能调用该方法获取队列中的任务
     @Override
     public E poll(long timeout, TimeUnit unit) throws InterruptedException {
         E x = null;
