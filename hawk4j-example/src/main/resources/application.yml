@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: hawk4j-example
+
+server:
+  port: 8088

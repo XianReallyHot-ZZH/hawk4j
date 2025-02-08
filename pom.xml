@@ -13,7 +13,7 @@
 <!--		<module>hawk4j-core</module>-->
 <!--		<module>hawk4j-common</module>-->
 <!--		<module>hawk4j-server</module>-->
-<!--		<module>hawk4j-example</module>-->
+		<module>hawk4j-example</module>
 	</modules>
 
 	<properties>
