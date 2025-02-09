@@ -28,6 +28,8 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
+ * 框架核心点之一：容量可变的LinkedBlockingQueue
+ * <p>
  * 基于链表的阻塞队列，支持动态调整容量。它继承了 AbstractQueue 并实现了 BlockingQueue 接口
  * 主要参考了 {@linkplain java.util.concurrent.LinkedBlockingQueue}的实现，在其基础上
  * 增加了可动调整容量功能，选择基于LinkedBlockingQueue的进行增强的考虑是：1、jdk中现存的阻塞队列
