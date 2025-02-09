@@ -5,6 +5,7 @@ import com.yy.hawk4j.core.plugin.RejectedAwarePlugin;
 import com.yy.hawk4j.core.plugin.ShutdownAwarePlugin;
 import com.yy.hawk4j.core.plugin.TaskAwarePlugin;
 import com.yy.hawk4j.core.plugin.manager.ThreadPoolPluginManager;
+import com.yy.hawk4j.core.plugin.manager.ThreadPoolPluginSupport;
 import lombok.*;
 
 import java.util.Collection;
@@ -16,7 +17,7 @@ import java.util.concurrent.*;
  * @非常非常核心的一个类
  * @扩展线程池类，这个类为jdk的原生线程池提供了非常多的扩展点，基本上每一个重要操作都提供了拓展点
  */
-public class ExtensibleThreadPoolExecutor extends ThreadPoolExecutor {
+public class ExtensibleThreadPoolExecutor extends ThreadPoolExecutor implements ThreadPoolPluginSupport {
 
     // 线程池Id
     @Getter
@@ -67,11 +68,11 @@ public class ExtensibleThreadPoolExecutor extends ThreadPoolExecutor {
         handlerWrapper.setHandler(handler);
     }
 
-    //    //得到贤臣吃
-//    @Override
-//    public ThreadPoolExecutor getThreadPoolExecutor() {
-//        return this;
-//    }
+    //得到线程池对象
+    @Override
+    public ThreadPoolExecutor getThreadPoolExecutor() {
+        return this;
+    }
 
     // ========================================= 以下都是对原生线程池的扩展点增强实现 =========================================
 
