@@ -1,8 +1,7 @@
-package com.yy.hawk4j.core.executor;
+package com.yy.hawk4j.core.plugin.manager;
 
 import com.yy.hawk4j.common.toolkit.Assert;
 import com.yy.hawk4j.core.plugin.*;
-import com.yy.hawk4j.core.plugin.manager.ThreadPoolPluginManager;
 import lombok.NonNull;
 
 import java.util.Collection;
