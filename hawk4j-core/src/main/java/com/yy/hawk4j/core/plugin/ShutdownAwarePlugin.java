@@ -1,5 +1,7 @@
 package com.yy.hawk4j.core.plugin;
 
+import com.yy.hawk4j.core.executor.ExtensibleThreadPoolExecutor;
+
 import java.util.List;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -12,8 +14,8 @@ public interface ShutdownAwarePlugin extends ThreadPoolPlugin {
      * Callback before pool shutdown.
      *
      * @param executor executor
-     * @see ThreadPoolExecutor#shutdown()
-     * @see ThreadPoolExecutor#shutdownNow()
+     * @see ExtensibleThreadPoolExecutor#shutdown()
+     * @see ExtensibleThreadPoolExecutor#shutdownNow()
      */
     default void beforeShutdown(ThreadPoolExecutor executor) {
     }
@@ -22,9 +24,9 @@ public interface ShutdownAwarePlugin extends ThreadPoolPlugin {
      * Callback after pool shutdown.
      *
      * @param executor       executor
-     * @param remainingTasks remainingTasks, or empty if no tasks left or {@link ThreadPoolExecutor#shutdown()} called
-     * @see ThreadPoolExecutor#shutdown()
-     * @see ThreadPoolExecutor#shutdownNow()
+     * @param remainingTasks remainingTasks, or empty if no tasks left or {@link ExtensibleThreadPoolExecutor#shutdown()} called
+     * @see ExtensibleThreadPoolExecutor#shutdown()
+     * @see ExtensibleThreadPoolExecutor#shutdownNow()
      */
     default void afterShutdown(ThreadPoolExecutor executor, List<Runnable> remainingTasks) {
     }
@@ -33,7 +35,7 @@ public interface ShutdownAwarePlugin extends ThreadPoolPlugin {
      * Callback after pool terminated.
      *
      * @param executor executor
-     * @see ThreadPoolExecutor#terminated()
+     * @see ExtensibleThreadPoolExecutor#terminated()
      */
     default void afterTerminated(ThreadPoolExecutor executor) {
     }
