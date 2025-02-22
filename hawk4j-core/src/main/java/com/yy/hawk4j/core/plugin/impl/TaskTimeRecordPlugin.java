@@ -24,21 +24,25 @@ public class TaskTimeRecordPlugin extends AbstractTaskTimerPlugin {
     /**
      * Total execution milli time of all tasks
      */
+    @Getter
     private long totalTaskTimeMillis = 0L;
 
     /**
      * Maximum task milli execution time, default -1
      */
+    @Getter
     private long maxTaskTimeMillis = -1L;
 
     /**
      * Minimal task milli execution time, default -1
      */
+    @Getter
     private long minTaskTimeMillis = -1L;
 
     /**
      * Count of completed task
      */
+    @Getter
     private long taskCount = 0L;
 
     @Override

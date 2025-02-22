@@ -16,16 +16,16 @@ public class TaskTimeoutNotifyAlarmPlugin extends AbstractTaskTimerPlugin {
     public static final String PLUGIN_NAME = "task-timeout-notify-alarm-plugin";
 
     /**
+     * Thread-pool id
+     */
+    private final String threadPoolId;
+
+    /**
      * Execute time-out
      */
     @Getter
     @Setter
     private Long executeTimeOut;
-
-    /**
-     * Thread-pool id
-     */
-    private final String threadPoolId;
 
     /**
      * Thread-pool executor
