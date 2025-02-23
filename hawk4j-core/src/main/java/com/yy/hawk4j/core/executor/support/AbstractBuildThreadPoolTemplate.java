@@ -11,7 +11,7 @@ import org.springframework.util.Assert;
 import java.util.concurrent.*;
 
 /**
- * @方法描述：线程池模板类，框架中的线程池就是由这类创建的，不管是动态线程池还是快速线程池还是普通线程池，都是由这个类创建的,创建的具体实现过程都在这个类里面
+ * @类描述：线程池创建模板类，框架中的线程池就是由这类创建的，不管是动态线程池还是快速线程池还是普通线程池，都是由这个类创建的,创建的具体实现过程都在这个类里面
  */
 @Slf4j
 public class AbstractBuildThreadPoolTemplate {
@@ -61,7 +61,23 @@ public class AbstractBuildThreadPoolTemplate {
      * @return
      */
     public static ThreadPoolExecutor buildFastPool(ThreadPoolInitParam initParam) {
-        return null;
+        //这里的队列是快速线程池的核心组件，正是因为使用了这个队列，所以才有了快速线程池
+        FastTaskQueue<Runnable> taskQueue = new FastTaskQueue<>(initParam.getCapacity());
+        FastThreadPoolExecutor fastThreadPoolExecutor;
+        try {
+            fastThreadPoolExecutor = new FastThreadPoolExecutor(initParam.getCorePoolNum(),
+                    initParam.getMaxPoolNum(),
+                    initParam.getKeepAliveTime(),
+                    initParam.getTimeUnit(),
+                    taskQueue,
+                    initParam.getThreadFactory(),
+                    initParam.rejectedExecutionHandler);
+        } catch (IllegalArgumentException ex) {
+            throw new IllegalArgumentException("Error creating thread pool parameter.", ex);
+        }
+        taskQueue.setExecutor(fastThreadPoolExecutor);
+        fastThreadPoolExecutor.allowCoreThreadTimeOut(initParam.allowCoreThreadTimeOut);
+        return fastThreadPoolExecutor;
     }
 
     public static ThreadPoolExecutor buildFastPool() {
@@ -76,7 +92,22 @@ public class AbstractBuildThreadPoolTemplate {
      * @return
      */
     public static ThreadPoolExecutor buildPool(ThreadPoolInitParam initParam) {
-        return null;
+        Assert.notNull(initParam);
+        ThreadPoolExecutor executorService;
+        try {
+            executorService = new GeneralThreadPoolExecutor(
+                    initParam.getCorePoolNum(),
+                    initParam.getMaxPoolNum(),
+                    initParam.getKeepAliveTime(),
+                    initParam.getTimeUnit(),
+                    initParam.getWorkQueue(),
+                    initParam.getThreadFactory(),
+                    initParam.rejectedExecutionHandler);
+        } catch (IllegalArgumentException ex) {
+            throw new IllegalArgumentException("Error creating thread pool parameter.", ex);
+        }
+        executorService.allowCoreThreadTimeOut(initParam.allowCoreThreadTimeOut);
+        return executorService;
     }
 
     public static ThreadPoolExecutor buildPool() {

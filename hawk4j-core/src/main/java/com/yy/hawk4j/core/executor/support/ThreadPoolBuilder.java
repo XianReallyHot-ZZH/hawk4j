@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.concurrent.*;
 
 /**
- * @方法描述：线程池构建器
+ * @方法描述：线程池构建器（覆盖对动态线程池、快速线程池、普通线程池的构建能力）
  */
 public class ThreadPoolBuilder implements Builder<ThreadPoolExecutor> {
 
