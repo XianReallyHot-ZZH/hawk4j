@@ -42,7 +42,7 @@ public class ThreadPoolBuilder implements Builder<ThreadPoolExecutor> {
     private BlockingQueueTypeEnum blockingQueueType = BlockingQueueTypeEnum.LINKED_BLOCKING_QUEUE;
 
     //线程池队列
-    private BlockingQueue workQueue;
+    private BlockingQueue<Runnable> workQueue;
 
     //拒绝策略
     private RejectedExecutionHandler rejectedExecutionHandler = new ThreadPoolExecutor.AbortPolicy();
@@ -309,9 +309,19 @@ public class ThreadPoolBuilder implements Builder<ThreadPoolExecutor> {
             initParam.setAwaitTerminationMillis(builder.awaitTerminationMillis);
         }
 
-        //如果创建的不是快速线程池，那就意味着是普通线程池
+        //如果创建的不是快速线程池，那就意味着是普通线程池或者动态线程池
         if (!builder.isFastPool) {
-
+            //判断任务队列是否为空
+            if (builder.workQueue == null) {
+                //设置任务队列，使用的是LinkedBlockingQueue
+                if (builder.blockingQueueType == null) {
+                    builder.blockingQueueType = BlockingQueueTypeEnum.LINKED_BLOCKING_QUEUE;
+                }
+                //创建LinkedBlockingQueue队列
+                builder.workQueue = BlockingQueueTypeEnum.createBlockingQueue(builder.blockingQueueType.getType(), builder.capacity);
+            }
+            //设置任务队列
+            initParam.setWorkQueue(builder.workQueue);
         }
 
         return initParam;

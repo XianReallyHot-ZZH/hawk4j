@@ -3,7 +3,10 @@ package com.yy.hawk4j.common.executor.support;
 import lombok.Getter;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.*;
 
 /**
  * @方法描述：阻塞队列枚举类，这个类中的枚举对象表示要创建哪种类型的队列
@@ -77,6 +80,34 @@ public enum BlockingQueueTypeEnum {
                 .filter(each -> each.name.equals(name))
                 .findFirst();
         return queueTypeEnum.orElse(LINKED_BLOCKING_QUEUE);
+    }
+
+    public static BlockingQueue<Runnable> createBlockingQueue(int type, Integer capacity) {
+        BlockingQueue<Runnable> blockingQueue = null;
+        if (Objects.equals(type, ARRAY_BLOCKING_QUEUE.type)) {
+            blockingQueue = new ArrayBlockingQueue<>(capacity);
+        } else if (Objects.equals(type, LINKED_BLOCKING_QUEUE.type)) {
+            blockingQueue = new LinkedBlockingQueue<>(capacity);
+        } else if (Objects.equals(type, LINKED_BLOCKING_DEQUE.type)) {
+            blockingQueue = new LinkedBlockingDeque<>(capacity);
+        } else if (Objects.equals(type, SYNCHRONOUS_QUEUE.type)) {
+            blockingQueue = new SynchronousQueue<>();
+        } else if (Objects.equals(type, LINKED_TRANSFER_QUEUE.type)) {
+            blockingQueue = new LinkedTransferQueue<>();
+        } else if (Objects.equals(type, PRIORITY_BLOCKING_QUEUE.type)) {
+            blockingQueue = new PriorityBlockingQueue<>(capacity);
+        } else if (Objects.equals(type, RESIZABLE_LINKED_BLOCKING_QUEUE.type)) {
+            blockingQueue = new ResizableCapacityLinkedBlockingQueue<>(capacity);
+        }
+//        Collection<CustomBlockingQueue> customBlockingQueues = DynamicThreadPoolServiceLoader
+//                .getSingletonServiceInstances(CustomBlockingQueue.class);
+//        blockingQueue = Optional.ofNullable(blockingQueue).orElseGet(() -> customBlockingQueues.stream()
+//                .filter(each -> Objects.equals(type, each.getType()))
+//                .map(each -> each.generateBlockingQueue())
+//                .findFirst()
+//                .orElse(new LinkedBlockingQueue(capacity)));
+        blockingQueue = Optional.ofNullable(blockingQueue).orElse(new LinkedBlockingQueue<>(capacity));
+        return blockingQueue;
     }
 
 

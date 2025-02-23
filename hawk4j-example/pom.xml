@@ -21,6 +21,13 @@
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>com.yy</groupId>
+			<artifactId>hawk4j-spring-boot-starter</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
 		<!--spring-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -39,12 +46,6 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>transmittable-thread-local</artifactId>
 			<version>${transmittable-thread-local.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.30</version>
 		</dependency>
 
 	</dependencies>
